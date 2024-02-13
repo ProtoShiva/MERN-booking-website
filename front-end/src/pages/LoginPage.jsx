@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 const LoginPage = () => {
   return (
-    <div className="mt-4 grow flex items-center justify-around min-h-screen">
+    <div className="mt-4 grow flex items-center justify-around h-screen ">
       <div className="mb-64">
         <h1 className="text-4xl text-center mb-4 font-bold">Login</h1>
         <form className="max-w-md mx-auto">
