@@ -1,19 +1,22 @@
 import React from "react"
-
+import { Link } from "react-router-dom"
 const LoginPage = () => {
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod iure
-      officia, enim placeat, debitis exercitationem similique esse, omnis libero
-      sint animi velit provident? Et veniam deserunt vel temporibus, beatae
-      eaque sed quidem, possimus, consequuntur voluptas neque nesciunt quibusdam
-      dolorem dolore aliquid accusantium nam. Quod labore velit atque
-      perspiciatis quis iste minima cupiditate! Quos similique fugiat ullam
-      asperiores rerum temporibus corrupti earum doloremque ab non eligendi
-      animi nisi dolore atque, inventore commodi aspernatur aliquam a sed
-      quaerat facere. Obcaecati ratione aperiam blanditiis voluptatum dolorum
-      error numquam itaque necessitatibus at. Dolore molestiae illum sunt natus.
-      Sequi nulla alias, fugit hic inventore corporis?
+    <div className="mt-4 grow flex items-center justify-around min-h-screen">
+      <div className="mb-64">
+        <h1 className="text-4xl text-center mb-4 font-bold">Login</h1>
+        <form className="max-w-md mx-auto">
+          <input type="email" placeholder="your@email.com" />
+          <input type="password" placeholder="password" />
+          <button className="primary font-bold">Login</button>
+          <div className="text-center py-2 text-gray-500">
+            Don't have an account yet?{" "}
+            <Link className="underline text-black" to={"/register"}>
+              Register now
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
