@@ -15,6 +15,9 @@ export default function RegisterPage() {
         password
       })
       alert("Registration successful. Now you can log in")
+      setName("")
+      setEmail("")
+      setPassword("")
     } catch (e) {
       alert("Registration failed. Please try again later")
     }
