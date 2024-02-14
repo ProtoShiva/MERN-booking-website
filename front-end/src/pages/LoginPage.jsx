@@ -7,7 +7,7 @@ const LoginPage = () => {
   async function handleLoginSubmit(ev) {
     ev.preventDefault()
     try {
-      await axios.post("http://localhost:3000/login", { email, password })
+      await axios.post("/login", { email, password })
       alert("Login successful")
     } catch (e) {
       alert("Login failed")
