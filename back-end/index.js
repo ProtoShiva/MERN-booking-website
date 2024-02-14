@@ -4,10 +4,13 @@ import connectDB from "./db/db.js"
 import bcrypt from "bcrypt"
 import "dotenv/config"
 import jwt from "jsonwebtoken"
+import cookieParser from "cookie-parser"
+import User from "./models/User.js"
 const app = express()
 const port = 3000
-import User from "./models/User.js"
+
 app.use(express.json())
+app.use(cookieParser())
 app.use(
   cors({
     credentials: true,
@@ -45,7 +48,7 @@ app.post("/login", async (req, res) => {
         {},
         (err, token) => {
           if (err) throw err
-          res.cookie("jwtToken", token).json("pass Ok")
+          res.cookie("jwtToken", token).json(userDoc)
         }
       )
     } else {
@@ -54,6 +57,11 @@ app.post("/login", async (req, res) => {
   } else {
     res.json("not found")
   }
+})
+
+app.get("/profile", (req, res) => {
+  const { jwtToken } = req.cookies
+  res.json({ jwtToken })
 })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
