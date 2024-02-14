@@ -4,8 +4,8 @@ import { UserContext } from "../UserContext"
 const Header = () => {
   const { user } = useContext(UserContext)
   return (
-    <header className="flex justify-between">
-      <a className="flex items-center gap-1">
+    <header className="flex justify-between ">
+      <Link to={"/"} className="flex items-center gap-1 cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -21,7 +21,7 @@ const Header = () => {
           />
         </svg>
         <span className="font-bold text-xl">airbnb</span>
-      </a>
+      </Link>
       <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 mt-2 shadow-md shadow-gray-300">
         <div>Anywhere</div>
         <div className="border-l border-gray-300"></div>
@@ -44,7 +44,7 @@ const Header = () => {
         </button>
       </div>
       <Link
-        to={"/login"}
+        to={user ? "/account" : "/login"}
         className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 "
       >
         <svg

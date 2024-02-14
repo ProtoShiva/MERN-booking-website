@@ -6,12 +6,15 @@ export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null)
   useEffect(() => {
     if (!user) {
-      axios.get("/profile")
+      axios.get("/profile").then(({ data }) => {
+        setUser(data)
+      })
     }
-  })
+  }, [])
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   )
 }
+//Note: useEffect doesn't allow async await so use .then()

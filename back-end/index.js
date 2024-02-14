@@ -61,7 +61,13 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   const { jwtToken } = req.cookies
-  res.json({ jwtToken })
+  if (jwtToken) {
+    jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
+      if (err) throw err
+      const { name, email, _id } = await User.findById(userData.id)
+      res.json({ name, email, _id })
+    })
+  }
 })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
