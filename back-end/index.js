@@ -69,6 +69,10 @@ app.get("/profile", (req, res) => {
     })
   }
 })
+
+app.post("/logout", (req, res) => {
+  res.cookie("jwtToken", "").json(true)
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

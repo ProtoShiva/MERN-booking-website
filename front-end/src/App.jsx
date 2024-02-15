@@ -2,10 +2,12 @@ import { Route, Routes } from "react-router-dom"
 import Header from "./components/Header"
 import IndexPage from "./pages/IndexPage"
 import LoginPage from "./pages/LoginPage"
-import Layout from "../layout/Layout"
+import Layout from "./layout/Layout"
 import RegisterPage from "./pages/RegisterPage"
 import axios from "axios"
-import { UserContextProvider } from "./UserContext"
+import { UserContextProvider } from "./context/UserContext"
+
+import AccountPage from "./pages/AccountPage"
 axios.defaults.baseURL = "http://localhost:3000"
 axios.defaults.withCredentials = true
 function App() {
@@ -16,6 +18,7 @@ function App() {
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/account/:subpage?" element={<AccountPage />} />
         </Route>
       </Routes>
     </UserContextProvider>
