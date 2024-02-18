@@ -140,7 +140,7 @@ app.post("/places", (req, res) => {
   })
 })
 
-app.get("/places", (req, res) => {
+app.get("/user-places", (req, res) => {
   const { jwtToken } = req.cookies
   jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
     const { id } = userData
@@ -165,7 +165,8 @@ app.put("/places", async (req, res) => {
     extraInfo,
     checkIn,
     checkOut,
-    maxGuests
+    maxGuests,
+    price
   } = req.body
   jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
     if (err) throw err
@@ -180,12 +181,17 @@ app.put("/places", async (req, res) => {
         extraInfo,
         checkIn,
         checkOut,
-        maxGuests
+        maxGuests,
+        price
       })
       await placeDoc.save()
       res.json("ok")
     }
   })
+})
+
+app.get("/places", async (req, res) => {
+  res.json(await Place.find())
 })
 
 app.listen(port, () => {
