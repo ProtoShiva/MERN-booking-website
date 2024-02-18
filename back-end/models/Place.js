@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-
+import { Schema } from "mongoose"
 const placeSchema = new Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   title: String,

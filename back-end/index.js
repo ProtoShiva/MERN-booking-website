@@ -6,7 +6,9 @@ import "dotenv/config"
 import jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser"
 import User from "./models/User.js"
+import Place from "./models/Place.js"
 import imageDownloader from "image-downloader"
+import mongoose from "mongoose"
 import multer from "multer"
 import fs from "fs"
 import { dirname } from "path"
@@ -104,6 +106,88 @@ app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
   }
   res.json(uploadedFiles)
 })
+
+app.post("/places", (req, res) => {
+  const { jwtToken } = req.cookies
+  const {
+    title,
+    address,
+    addedPhotos,
+    description,
+    price,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests
+  } = req.body
+  jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
+    if (err) throw err
+    const placeDoc = await Place.create({
+      owner: userData.id,
+      price,
+      title,
+      address,
+      photos: addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests
+    })
+    res.json(placeDoc)
+  })
+})
+
+app.get("/places", (req, res) => {
+  const { jwtToken } = req.cookies
+  jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
+    const { id } = userData
+    res.json(await Place.find({ owner: id }))
+  })
+})
+
+app.get("/places/:id", async (req, res) => {
+  const { id } = req.params
+  res.json(await Place.findById(id))
+})
+
+app.put("/places", async (req, res) => {
+  const { jwtToken } = req.cookies
+  const {
+    id,
+    title,
+    address,
+    addedPhotos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests
+  } = req.body
+  jwt.verify(jwtToken, process.env.jwtSecret, {}, async (err, userData) => {
+    if (err) throw err
+    const placeDoc = await Place.findById(id)
+    if (userData.id === placeDoc.owner.toString()) {
+      placeDoc.set({
+        title,
+        address,
+        photos: addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests
+      })
+      await placeDoc.save()
+      res.json("ok")
+    }
+  })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
