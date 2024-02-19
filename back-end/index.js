@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser"
 import User from "./models/User.js"
 import Place from "./models/Place.js"
+import Booking from "./models/Booking.js"
 import imageDownloader from "image-downloader"
 import mongoose from "mongoose"
 import multer from "multer"
@@ -26,6 +27,21 @@ app.use(
   })
 )
 const bcryptSalt = bcrypt.genSaltSync(10)
+
+function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(
+      req.cookies.jwtToken,
+      process.env.jwtSecret,
+      {},
+      async (err, userData) => {
+        if (err) throw err
+        resolve(userData)
+      }
+    )
+  })
+}
+
 app.get("/", (req, res) => {
   res.send("Hello World!")
 })
@@ -192,6 +208,33 @@ app.put("/places", async (req, res) => {
 
 app.get("/places", async (req, res) => {
   res.json(await Place.find())
+})
+
+app.post("/bookings", async (req, res) => {
+  const userData = await getUserDataFromReq(req)
+  const { place, checkIn, checkOut, numberOfGuests, name, phone, price } =
+    req.body
+  Booking.create({
+    place,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    name,
+    phone,
+    price,
+    user: userData.id
+  })
+    .then((doc) => {
+      res.json(doc)
+    })
+    .catch((err) => {
+      throw err
+    })
+})
+
+app.get("/bookings", async (req, res) => {
+  const userData = await getUserDataFromReq(req)
+  res.json(await Booking.find({ user: userData.id }).populate("place"))
 })
 
 app.listen(port, () => {

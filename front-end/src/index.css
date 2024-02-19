@@ -20,3 +20,16 @@ button.primary {
   background-color: #f5385d;
   @apply bg-primary p-2 w-full text-white rounded-2xl;
 }
+
+@font-face {
+  font-family: "airFont-b";
+  src: url(./fonts/Airbnb_Cereal-Bold-bdfb98485e7836ba31b456f65cded088.ttf) format("truetype");
+}
+@font-face {
+  font-family: "airFont-r";
+  src: url(./fonts/Airbnb_Cereal-Book-9a1c9cca9bb3d65fefa2aa487617805e.ttf) format("truetype");
+}
+@font-face {
+  font-family: "airFont-m";
+  src: url(./fonts/Airbnb_Cereal-Medium-50fc004b3082375f12ff0cfb67bf8e56.ttf) format("truetype");
+}

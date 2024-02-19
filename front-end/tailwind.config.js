@@ -5,6 +5,11 @@ export default {
     extend: {
       colors: {
         primary: "#F5385D"
+      },
+      fontFamily: {
+        "airFont-b": ["airFont-b"],
+        "airFont-r": ["airFont-r"],
+        "airFont-m": ["ariFont-m"]
       }
     }
   },
